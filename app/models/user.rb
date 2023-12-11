@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   validate :picture_size
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   private
 
