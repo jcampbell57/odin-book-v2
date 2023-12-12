@@ -1,20 +1,28 @@
 Rails.application.routes.draw do
-  get 'friendships/create'
-  get 'likes/create'
-  get 'comments/new'
-  get 'comments/create'
+  # get 'friendships/create'
+  # get 'likes/create'
+  # get 'comments/new'
+  # get 'comments/create'
+  # get 'posts/index'
+  # get 'posts/show'
+  # get 'posts/new'
+  # get 'posts/create'
+  # get 'users/index'
+  # get 'users/show'
+
   root 'posts#index'
 
-  get 'posts/index'
-  get 'posts/show'
-  get 'posts/new'
-  get 'posts/create'
-  get 'users/index'
-  get 'users/show'
-
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :users, only: %i[index show] do
+    resources :friendships, only: %i[create]
+  end
+
+  resources :posts, only: %i[index new create show destroy] do
+    resources :likes, only: %i[create]
+  end
+
+  resources :comments, only: %i[new create destroy] do
+    resources :likes, only: %i[create]
+  end
 end
