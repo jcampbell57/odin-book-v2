@@ -5,6 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  mount_uploader :image, PictureUploader
   validate :picture_size
 
   has_many :posts, dependent: :destroy
@@ -33,6 +34,28 @@ class User < ApplicationRecord
   has_many :pending_requests_received, -> { merge(Friendship.not_friends) },
            through: :recieved_friend_requests, source: :sent_by
   # END FRIENDSHIP ASSOCIATIONS
+
+  # Returns a string containing this user's first name and last name
+  def full_name
+    "#{fname} #{lname}"
+  end
+
+  # Returns all posts from this user's friends and self
+  def friends_and_own_posts
+    # myfriends = friends
+    our_posts = []
+    # myfriends.each do |f|
+    friends.each do |f|
+      f.posts.each do |p|
+        our_posts << p
+      end
+    end
+    posts.each do |p|
+      our_posts << p
+    end
+    our_posts
+    # our_posts.order('created_at desc')
+  end
 
   private
 
