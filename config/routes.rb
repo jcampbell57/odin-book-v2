@@ -16,7 +16,13 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[index show] do
     resources :friendships, only: %i[create]
+    collection do
+      get 'accept_friend'
+      get 'decline_friend'
+    end
   end
+
+  put '/users/:id', to: 'users#update_img'
 
   resources :posts, only: %i[index new create show destroy] do
     resources :likes, only: %i[create]
