@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
+
   def index
     @users = User.all
     @friends = current_user.friends
     @pending_requests = current_user.pending_requests_sent
     @friend_requests = current_user.pending_requests_received
+    @other_users = User.all.reject { |user| user == current_user || possible_friend?(user) }
   end
 
   def show
