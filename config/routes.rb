@@ -15,10 +15,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, only: %i[index show] do
-    resources :friendships, only: %i[create]
-    collection do
-      get 'accept_friend'
-      get 'decline_friend'
+    resources :friendships, only: %i[create] do
+      collection do
+        get 'accept_friend'
+        get 'decline_friend'
+      end
     end
   end
 
