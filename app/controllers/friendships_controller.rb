@@ -9,7 +9,7 @@ class FriendshipsController < ApplicationController
     return if friend_request_sent?(User.find(params[:user_id]))
 
     # Disallow the ability to send friend request to someone who already sent you one
-    return if friend_request_recieved?(User.find(params[:user_id]))
+    return if friend_request_received?(User.find(params[:user_id]))
 
     @user = User.find(params[:user_id])
     @friendship = current_user.sent_friend_requests.build(sent_to_id: params[:user_id])
