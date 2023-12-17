@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       collection do
         get 'accept_friend'
         get 'decline_friend'
+        delete 'remove_friend'
       end
     end
   end

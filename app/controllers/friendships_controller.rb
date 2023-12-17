@@ -50,6 +50,7 @@ class FriendshipsController < ApplicationController
     else
       flash[:danger] = 'Friend Request could not be accepted!'
     end
+
     redirect_back(fallback_location: root_path)
   end
 
@@ -59,6 +60,22 @@ class FriendshipsController < ApplicationController
 
     @friendship.destroy
     flash[:success] = 'Friend Request Declined!'
+    redirect_back(fallback_location: root_path)
+  end
+
+  def remove_friend
+    @friendship = Friendship.find_by(sent_by_id: params[:user_id], sent_to_id: current_user.id, status: true)
+    return unless @friendship # return if no record is found
+
+    if @friendship.destroy
+      flash[:success] = 'Friend removed!'
+      reciprocal_friendship = Friendship.find_by(sent_by_id: current_user.id, sent_to_id: params[:user_id],
+                                                 status: true)
+      reciprocal_friendship.destroy
+    else
+      flash[:danger] = 'Friend removal failed!'
+    end
+
     redirect_back(fallback_location: root_path)
   end
 end
