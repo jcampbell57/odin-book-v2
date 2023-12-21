@@ -53,7 +53,7 @@ class User < ApplicationRecord
     our_posts.concat(posts)
 
     # Sort the array based on created_at in descending order
-    our_posts.sort_by! { |post| post.created_at }.reverse
+    our_posts.sort_by! { |post| post.created_at }.reverse!
 
     our_posts
   end
