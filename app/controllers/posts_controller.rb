@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   def index
-    # @posts = Post.all.order('created_at desc')
     @posts = current_user.friends_and_own_posts
   end
 
@@ -16,15 +15,11 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      # redirect_to @post
-      redirect_to root_path
+      flash[:success] = 'Post created'
     else
-      # to render index from here, @posts needs to be defined again.
-      # @posts = Post.all.order('created_at desc')
-      # Not sure why the below @posts will show a post with no content on submit, but the version above will not.
-      @posts = current_user.friends_and_own_posts
-      render :index, status: :unprocessable_entity
+      flash[:danger] = "Unable to post: #{@post.errors.full_messages.join(', ')}"
     end
+    redirect_back(fallback_location: root_path)
   end
 
   def destroy; end
