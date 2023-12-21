@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   mount_uploader :image, ImageUploader
   validate :picture_size
+  validate :valid_image_content_type
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -41,19 +42,20 @@ class User < ApplicationRecord
 
   # Returns all posts from this user's friends and self
   def friends_and_own_posts
-    # myfriends = friends
     our_posts = []
-    # myfriends.each do |f|
     friends.each do |f|
       f.posts.each do |p|
         our_posts << p
       end
     end
-    posts.each do |p|
-      our_posts << p
-    end
+
+    # append user's posts
+    our_posts.concat(posts)
+
+    # Sort the array based on created_at in descending order
+    our_posts.sort_by! { |post| post.created_at }.reverse
+
     our_posts
-    # our_posts.order('created_at desc')
   end
 
   private
@@ -61,5 +63,11 @@ class User < ApplicationRecord
   # Validates the size of an uploaded picture.
   def picture_size
     errors.add(:image, 'should be less than 1MB') if image.size > 1.megabytes
+  end
+
+  # Validates the content type of the uploaded image.
+  def valid_image_content_type
+    allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
+    errors.add(:image, 'must be a valid image format') unless image.content_type.in?(allowed_types)
   end
 end
