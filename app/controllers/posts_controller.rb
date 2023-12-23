@@ -3,9 +3,9 @@ class PostsController < ApplicationController
     @posts = current_user.friends_and_own_posts
   end
 
-  # def show
-  # @post = Post.find(params[:id])
-  # end
+  def show
+    @post = Post.find(params[:id])
+  end
 
   def new
     @post = Post.new
@@ -22,7 +22,17 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
-  def destroy; end
+  def destroy
+    @post = Post.find(params[:id])
+    return unless current_user.id == @post.user_id
+
+    if @post.destroy
+      flash[:success] = 'Post deleted'
+    else
+      flash[:danger] = "Unable to delete post: #{@post.errors.full_messages.join(', ')}"
+    end
+    redirect_back(fallback_location: root_path)
+  end
 
   private
 
