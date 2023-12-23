@@ -14,9 +14,10 @@ class FriendshipsController < ApplicationController
     @user = User.find(params[:user_id])
     @friendship = current_user.sent_friend_requests.build(sent_to_id: params[:user_id])
     if @friendship.save
-      flash[:success] = 'Friend Request Sent!'
-      @notification = new_notification(@user, @current_user.id, 'friendRequest')
+      @notification = @user.notifications.build(notice_id: @current_user.id, notice_type: 'friendRequest')
       @notification.save
+
+      flash[:success] = 'Friend Request Sent!'
     else
       flash[:danger] = 'Friend Request Failed!'
     end

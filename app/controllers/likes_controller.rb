@@ -8,13 +8,17 @@ class LikesController < ApplicationController
     return unless @subject
 
     if already_liked?(type)
-      unlike(type)
+      unlike(type, @subject)
     else
       @like = @subject.likes.build(user_id: current_user.id)
       if @like.save
-        flash[:success] = "#{type} liked!"
-        @notification = new_notification(@subject.user, @subject.id, notice_type)
+        if type == 'post'
+          @notification = @subject.user.notifications.build(post_id: @subject.id, notice_type:)
+        elsif type == 'comment'
+          @notification = @subject.user.notifications.build(comment_id: @subject.id, notice_type:)
+        end
         @notification.save
+        flash[:success] = "#{type} liked!"
       else
         flash[:danger] = "#{type} like failed!"
       end
@@ -50,12 +54,30 @@ class LikesController < ApplicationController
     result
   end
 
-  def unlike(type)
-    @like = Like.find_by(post_id: params[:post_id]) if type == 'post'
-    @like = Like.find_by(comment_id: params[:comment_id]) if type == 'comment'
+  def unlike(type, subject)
+    if type == 'post'
+      @like = Like.where(post_id: params[:post_id],
+                         user_id: current_user.id).first
+    elsif type == 'comment'
+      @like = Like.where(comment_id: params[:comment_id],
+                         user_id: current_user.id).first
+    end
     return unless @like
 
-    @like.destroy
+    if type == 'post'
+      @notification = Notification.where(post_id: params[:post_id],
+                                         user_id: subject.user_id).first
+    elsif type == 'comment'
+      @notification = Notification.where(comment_id: params[:comment_id],
+                                         user_id: subject.user_id).first
+    end
+
+    if @like.destroy
+      @notification.destroy
+      flash[:success] = "#{type} unliked!"
+    else
+      flash[:danger] = "#{type} unlike failed!"
+    end
     redirect_back(fallback_location: root_path)
   end
 end
