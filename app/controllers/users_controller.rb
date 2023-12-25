@@ -25,9 +25,19 @@ class UsersController < ApplicationController
       if @user.save
         flash[:success] = 'Image uploaded'
       else
-        flash[:danger] = 'Image uploaded failed'
+        flash[:danger] = "Image upload failed: #{@user.errors.full_messages.join(', ')}"
       end
     end
     redirect_back(fallback_location: root_path)
+  end
+
+  def notifications
+    if current_user == User.find(params[:id])
+      @new = current_user.notifications.where(viewed?: false).to_a
+      @old = current_user.notifications.where(viewed?: true).to_a
+      @new.each { |notification| notification.update(viewed?: true) }
+    else
+      redirect_to notifications_user_path(`current_user`)
+    end
   end
 end
