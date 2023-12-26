@@ -19,9 +19,17 @@
         </ul>
         
         <ul class="navbar-nav">
-          <li class="nav-item d-flex align-items-center" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#noticeModal">
-            <i class="bi bi-bell nav-link"></i>
-          </li>
+          <% if current_user.notifications.where(viewed?: false).empty? %>
+            <li class="nav-item d-flex align-items-center" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#noticeModal">
+              <i class="bi bi-bell nav-link"></i>
+            </li>
+          <% else %>
+            <li class="nav-item d-flex align-items-center">
+              <%= link_to notifications_user_path(current_user), class: "btn btn-info btn-sm" do %>
+                <i class="bi bi-bell"></i> <%= current_user.notifications.where(viewed?: false).count %>
+              <% end %>
+            </li>
+          <% end %>
           
           <li class="nav-item dropdown" style="max-width: 3rem; max-height: 3rem;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
