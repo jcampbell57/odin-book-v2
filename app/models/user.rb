@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[github]
 
   mount_uploader :image, ImageUploader
   validate :picture_size
@@ -24,11 +25,6 @@ class User < ApplicationRecord
                                       dependent: :destroy
   has_many :friends, -> { merge(Friendship.friends) },
            through: :sent_friend_requests, source: :sent_to
-  # Not sure if this one is functional:
-  # (not needed because all friendships have two records,
-  # so previous assosiaction will catch all)
-  # has_many :friends, -> { merge(Friendship.friends) },
-  #          through: :recieved_friend_requests, source: :sent_by
   has_many :pending_requests_sent, -> { merge(Friendship.not_friends) },
            through: :sent_friend_requests, source: :sent_to
   has_many :pending_requests_received, -> { merge(Friendship.not_friends) },
@@ -56,6 +52,26 @@ class User < ApplicationRecord
     our_posts.sort_by! { |post| post.created_at }.reverse!
 
     our_posts
+  end
+
+  def self.from_omniauth(auth)
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name   # assuming the user model has a name
+      user.image = auth.info.image # assuming the user model has an image
+      # If you are using confirmable and the provider(s) you use validate emails,
+      # uncomment the line below to skip the confirmation emails.
+      # user.skip_confirmation!
+    end
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if (data = session['devise.github_data'] && session['devise.github_data']['extra']['raw_info']) && user.email.blank?
+        user.email = data['email']
+      end
+    end
   end
 
   private
