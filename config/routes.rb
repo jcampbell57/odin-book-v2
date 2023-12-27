@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root 'posts#index'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
+  # https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#logout-links
+  # devise_scope :user do
+  # delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  # end
 
   resources :users, only: %i[index show notifications] do
     get :notifications, on: :member
