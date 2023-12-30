@@ -96,6 +96,7 @@ GEM
       marcel (~> 1.0.0)
       ssrf_filter (~> 1.0)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crass (1.0.6)
     dartsass-ruby (3.0.2)
       sass-embedded (~> 1.54, < 1.67)
@@ -115,6 +116,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dockerfile-rails (1.6.1)
+      rails (>= 3.0.0)
     erubi (1.12.0)
     execjs (2.9.1)
     faraday (2.8.1)
@@ -241,6 +244,10 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
+    redis (5.0.8)
+      redis-client (>= 0.17.0)
+    redis-client (0.19.1)
+      connection_pool
     regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -308,6 +315,7 @@ DEPENDENCIES
   dartsass-sprockets
   debug
   devise (~> 4.9)
+  dockerfile-rails (>= 1.6)
   importmap-rails
   jbuilder
   jquery-rails
@@ -317,6 +325,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.8)
+  redis (~> 5.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
