@@ -1,0 +1,11 @@
+<%= form_for @comment = Comment.new do |f| %>
+  <%= render "devise/shared/error_messages", resource: @comment %>
+
+  <%= f.hidden_field :post_id, :value => post.id %>
+  <%= f.hidden_field :parent_id, :value => parent.id unless parent.nil? %>
+
+  <div class="form-group">
+    <%= f.text_field :content, class: "comment-box", placeholder: " Write a comment..." %>
+    <%= f.submit 'Submit Comment'%>
+  </div>
+<% end %>
