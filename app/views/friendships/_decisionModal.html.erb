@@ -1,0 +1,19 @@
+<div class="modal fade" id="decisionModal" tabindex="-1" aria-labelledby="decisionModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="decisionModalLabel">Friend Request from <%= "#{user.full_name}" %></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <%# <div class="modal-body">...</div> %>
+      
+      <div class="modal-footer">
+        <%= link_to 'Decline', decline_friend_user_friendships_path(user), class: 'btn btn-outline-secondary btn-sm' %>
+        <%= link_to 'Accept', accept_friend_user_friendships_path(user), class: 'btn btn-outline-primary btn-sm' %>
+      </div>
+    
+    </div>
+  </div>
+</div>
