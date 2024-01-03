@@ -17,7 +17,7 @@ module ApplicationHelper
   # BEGIN LIKES HELPERS
   # Checks whether a post or comment has already been liked by the
   # current user returning either true or false
-  def liked?(subject, type)
+  def liked?(subject, type, current_user)
     result = false
     if type == 'post'
       result = Like.where(user_id: current_user.id,

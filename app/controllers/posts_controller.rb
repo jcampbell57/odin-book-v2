@@ -15,6 +15,10 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
+      ActionCable.server.broadcast('post',
+                                   ApplicationController.renderer.render(partial: 'posts/post',
+                                                                         locals: { post: @post,
+                                                                                   current_user: }))
       flash[:success] = 'Post created'
     else
       flash[:danger] = "Unable to post: #{@post.errors.full_messages.join(', ')}"
