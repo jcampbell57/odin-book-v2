@@ -13,9 +13,13 @@ class LikesController < ApplicationController
       @like = @subject.likes.build(user_id: current_user.id)
       if @like.save
         if type == 'post'
-          @notification = @subject.user.notifications.build(post_id: @subject.id, notice_type:)
+          @notification = @subject.user.notifications.build(notice_id: @current_user.id,
+                                                            post_id: @subject.id,
+                                                            notice_type:)
         elsif type == 'comment'
-          @notification = @subject.user.notifications.build(comment_id: @subject.id, notice_type:)
+          @notification = @subject.user.notifications.build(notice_id: @current_user.id,
+                                                            comment_id: @subject.id,
+                                                            notice_type:)
         end
         @notification.save
         flash[:success] = "#{type} liked!"

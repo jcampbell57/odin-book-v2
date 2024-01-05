@@ -7,12 +7,18 @@ class User < ApplicationRecord
 
   mount_uploader :image, ImageUploader
   validate :picture_size
-  validate :valid_image_content_type
+
+  # Needs to validate only when image is present:
+  # validate :valid_image_content_type
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :sent_notifications, class_name: 'Notification',
+                                foreign_key: 'notice_id',
+                                inverse_of: 'originator',
+                                dependent: :destroy
 
   # BEGIN FRIENDSHIP ASSOCIATIONS
   has_many :sent_friend_requests, class_name: 'Friendship',
@@ -58,7 +64,7 @@ class User < ApplicationRecord
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name   # assuming the user model has a name
+      user.fname = auth.info.name # assuming the user model has a name
       user.image = auth.info.image # assuming the user model has an image
       # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.
