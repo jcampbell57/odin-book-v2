@@ -1,69 +1,85 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.email_field :fname, autofocus: true, autocomplete: "fname" %>
-  </div>
+  <div class="card">
+    <h4 class="card-header">Edit <%= resource_name.to_s.humanize %></h4>
 
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.email_field :lname, autocomplete: "lname" %>
-  </div>
+    <div class="card-body">
+      <div class="field mb-3">
+        <%= f.label :upload_a_profile_picture, class: "form-label" %><br />
+        <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png', class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
+      <div class="field mb-3">
+        <%= f.label :first_name, class: "form-label" %><br />
+        <%= f.text_field :fname, autofocus: true, autocomplete: "fname", class: "form-control" %>
+      </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+      <div class="field mb-3">
+        <%= f.label :last_name, class: "form-label" %><br />
+        <%= f.text_field :lname, autocomplete: "lname", class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+      <div class="field mb-3">
+        <%= f.label :email, class: "form-label" %><br />
+        <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
+      <div class="field mb-3">
+        <%= f.label :password, class: "form-label" %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+        <% if @minimum_password_length %>
+          <em><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
 
-  <div class="field">
-    <%= f.label :upload_a_profile_picture %><br />
-    <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png' %>
-  </div>
+      <div class="field mb-3">
+        <%= f.label :password_confirmation, class: "form-label" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+      <div class="field mb-3">
+        <%= f.label :current_password, class: "form-label" %> <i>(we need your current password to confirm your changes)</i><br />
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+      </div>
+
+      <br>
+
+      <div class="actions">
+        <%= f.submit "Update", class: "btn btn-secondary" %>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<br>
 
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<div class="card">
+  <h5 class="card-header">Cancel my account</h5>
+
+  <div class="card-body">
+    <h5 class="card-title">Unhappy?</h5>
+    <br>
+    <%= button_to "Cancel my account", registration_path(resource_name), class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+  </div>
+</div>
+
+<br>
 
 <%= link_to "Back", :back %>
+
+<br><br><br>
 
 <%# Validate image file size %>
 <script type="text/javascript">
 document.getElementById('user_image').addEventListener('change', function() {
   var size_in_megabytes = this.files[0].size/1024/1024;
   if (size_in_megabytes > 1) {
-    alert('Maximum file size is 1 MB. Please choose a smaller      
-    file.');
+    alert('Maximum file size is 1 MB. Please choose a smaller file.');
   }
 });
 </script>

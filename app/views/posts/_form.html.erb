@@ -1,6 +1,6 @@
 <%= form_with model: Post do |f| %>
-  <div>
-    <%= f.text_field :content, placeholder: ' Write a post...' %>
-    <%= f.submit 'Submit Post' %>
+  <div class="input-group mb-2">
+    <%= f.text_field :content, placeholder: ' Write a post...', aria_label: "Recipient's username", aria_describedby: "button-addon2", class: "form-control" %>
+    <%= f.submit 'Submit Post', class: 'btn btn-secondary', id: "button-addon2" %>
   </div>
 <% end %>  
