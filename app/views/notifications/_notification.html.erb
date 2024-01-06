@@ -1,0 +1,28 @@
+<%# If Notification type is a Friend Request %>
+<% if notification.notice_type == "friendRequest" %>
+  <% user = notification_find(notification, 'friendRequest') %>
+  <%= link_to user_path(user), class: "list-group-item list-group-item-action #{'list-group-item-primary' if @new.include?(notification)}" do%>
+    Friend Request sent from <%= "#{user.full_name}" %>
+  <% end %> 
+<% end %>
+
+<%# If Notification type is a comment %>
+<% if notification.notice_type == "comment"%>
+  <%= link_to post_path(notification_find(notification, 'comment')), class: "list-group-item list-group-item-action #{'list-group-item-primary' if @new.include?(notification)}" do %>
+    <%= User.find(notification.notice_id).full_name %> commented on your post  
+  <% end %>
+<% end %>
+
+<%# If Notification type is a liked post %>
+<% if notification.notice_type == "like-post"%>
+  <%= link_to post_path(notification_find(notification, 'like-post')), class: "list-group-item list-group-item-action #{'list-group-item-primary' if @new.include?(notification)}" do %>
+    <%= User.find(notification.notice_id).full_name %> liked your post
+  <% end %>
+<% end %>
+
+<%# If Notification type is a liked comment %>
+<% if notification.notice_type == "like-comment"%>
+  <%= link_to post_path(notification_find(notification, 'like-comment')), class: "list-group-item list-group-item-action #{'list-group-item-primary' if @new.include?(notification)}" do %>
+    <%= User.find(notification.notice_id).full_name %> liked your comment under this post
+  <% end %>
+<% end %>

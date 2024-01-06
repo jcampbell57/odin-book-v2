@@ -1,0 +1,15 @@
+<% unless @new.empty? %>
+  <h5 class="modal-title" id="noticeModalLabel"><%= pluralize(@new.size, 'new notification') %></h5>
+  <br>
+
+  <ul class="list-group">
+    <%= render @new %>
+  </ul>
+<% else %>
+  <h5 class="modal-title" id="noticeModalLabel"><%= pluralize(@old.size, 'previous notification') %></h5>
+  <br>
+<% end %>
+
+<ul class="list-group list-group-flush">
+  <%= render @old %>
+</ul>
