@@ -120,6 +120,8 @@ GEM
       rails (>= 3.0.0)
     erubi (1.12.0)
     execjs (2.9.1)
+    faker (3.2.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.8.1)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -316,6 +318,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dockerfile-rails (>= 1.6)
+  faker
   importmap-rails
   jbuilder
   jquery-rails
