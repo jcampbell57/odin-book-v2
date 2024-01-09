@@ -22,11 +22,13 @@ class LikesController < ApplicationController
                                                             notice_type:)
         end
         @notification.save
-        flash[:success] = "#{type} liked!"
-      else
-        flash[:danger] = "#{type} like failed!"
       end
-      redirect_back(fallback_location: root_path)
+    end
+
+    if type == 'post'
+      render partial: 'posts/post', locals: { post: @subject }
+    elsif type == 'comment'
+      render partial: 'posts/post', locals: { post: Post.find(@subject.post_id) }
     end
   end
 
@@ -78,10 +80,9 @@ class LikesController < ApplicationController
 
     if @like.destroy
       @notification.destroy
-      flash[:success] = "#{type} unliked!"
     else
-      flash[:danger] = "#{type} unlike failed!"
+      flash.now[:danger] = "#{type} unlike failed!"
+      render turbo_stream: turbo_stream.replace('flash_alert', partial: 'layouts/flash', locals: { flash: })
     end
-    redirect_back(fallback_location: root_path)
   end
 end

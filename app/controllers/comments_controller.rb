@@ -8,17 +8,13 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @post = Post.find(params[:comment][:post_id])
-    if @comment.save
-      @notification = @post.user.notifications.build(post_id: @post.id,
-                                                     notice_id: current_user.id,
-                                                     notice_type: 'comment')
-      @notification.save
+    return unless @comment.save
 
-      flash[:success] = 'Comment posted'
-    else
-      flash[:danger] = "Unable to comment: #{@post.errors.full_messages.join(', ')}"
-    end
-    redirect_back(fallback_location: root_path)
+    @notification = @post.user.notifications.build(post_id: @post.id,
+                                                   notice_id: current_user.id,
+                                                   notice_type: 'comment')
+    @notification.save
+    render partial: 'posts/post', locals: { post: @post }
   end
 
   def destroy
@@ -26,15 +22,15 @@ class CommentsController < ApplicationController
     return unless current_user.id == @comment.user_id
 
     if @comment.destroy
-      flash[:success] = 'Comment deleted'
-
       Notification.where(notice_id: current_user.id,
                          post_id: @comment.post_id,
                          notice_type: 'comment').first.destroy
+
+      render partial: 'posts/post', locals: { post: Post.find(@comment.post_id) }
     else
-      flash[:danger] = "Unable to delete comment: #{@comment.errors.full_messages.join(', ')}"
+      flash.now[:danger] = "Unable to delete comment: #{@comment.errors.full_messages.join(', ')}"
+      render turbo_stream: turbo_stream.replace('flash_alert', partial: 'layouts/flash', locals: { flash: })
     end
-    redirect_back(fallback_location: root_path)
   end
 
   private

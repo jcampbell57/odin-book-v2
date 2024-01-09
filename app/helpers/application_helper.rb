@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   # BEGIN NOTIFICATIONS HELPERS
   # Receives the notification object as parameter along with a type
   # and returns a User record, Post record or a Comment record

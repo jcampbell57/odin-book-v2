@@ -16,7 +16,9 @@
     <br>
 
     <div class = container>
-      <%= render 'layouts/flash' %>
+      <%= turbo_frame_tag "flash" do %>
+        <%= render 'layouts/flash' %>
+      <% end %>
       <%= yield %>
     </div>
   </body>

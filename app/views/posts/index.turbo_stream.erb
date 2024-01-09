@@ -1,0 +1,11 @@
+<%= turbo_stream.append "post-display" do %>
+  <%= render partial: "post", collection: @posts %>
+<% end %>
+
+<% if @pagy.next.present? %>
+  <%= turbo_stream.replace "pagination" do %>
+    <%= turbo_frame_tag "pagination", src: posts_path(page: @pagy.next, format: :turbo_stream), loading: :lazy %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove "loading-icon" %>
+<% end %>
