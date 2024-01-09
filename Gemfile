@@ -90,3 +90,5 @@ gem 'omniauth-rails_csrf_protection'
 gem "dockerfile-rails", ">= 1.6", :group => :development
 
 gem 'faker'
+
+gem 'pagy', '~> 6.2'
