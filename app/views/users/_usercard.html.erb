@@ -1,0 +1,36 @@
+<div class="col">
+  <div class="card text-center text-bg-light" style="max-width: 540px;">
+    <div class="row g-0 d-flex align-items-center">
+      
+      <div class="col-md-4">
+        <% if user.image? %>
+          <%= image_tag user.image.url, class: "img-fluid rounded-start" %>
+        <% else %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="4rem" height="4rem" fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16" style="margin: 10px;">
+            <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          </svg>
+        <% end %>
+      </div>
+      
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to user.full_name, user_path(user), class: 'nav-link' %></h5>
+          <%= render 'button', user: %>
+        </div>
+      </div>
+    </div>
+
+    <%# Render footer for sent and recieved requests %>
+    <% if @pending_requests.include?(user) %>
+      <div class="card-footer text-body-secondary">
+        <%= distance_of_time_in_words(current_user.sent_friend_requests.find_by(sent_to_id: user.id).created_at, Time.now) %> ago
+      </div>
+    <% elsif @friend_requests.include?(user) %>
+      <div class="card-footer text-body-secondary">
+        <%= distance_of_time_in_words(current_user.recieved_friend_requests.find_by(sent_by_id:user.id).created_at, Time.now) %> ago
+      </div>          
+    <% end %>
+
+  </div>
+</div>

@@ -1,2 +1,97 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class="card text-center">
+  <div class="card-header">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+      <% unless @friends.empty? %>
+        <button class="nav-link active"
+                id="friends-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#friends"
+                type="button"
+                role="tab"
+                aria-controls="friends"
+                aria-selected="true">
+                  <%= pluralize(@friends.size, 'connection') %>
+        </button>
+      <% end %>
+
+      <% unless @pending_requests.empty? %>
+        <button class="nav-link "
+                id="requests-pending-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#requests-pending"
+                type="button"
+                role="tab"
+                aria-controls="requests-pending"
+                aria-selected="false">
+                  <%= pluralize(@pending_requests.size, 'connection') %> pending
+        </button>
+      <% end %>
+
+      <% unless @friend_requests.empty? %>
+        <button class="nav-link"
+                id="pending-requests-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#pending-requests"
+                type="button"
+                role="tab"
+                aria-controls="pending-requests"
+                aria-selected="false">
+                  <%= pluralize(@friend_requests.size, 'pending connection') %>
+        </button>
+      <% end %>
+
+      <% unless @other_users.empty? %>
+        <button class="nav-link"
+                id="find-friends-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#find-friends"
+                type="button"
+                role="tab"
+                aria-controls="find-friends"
+                aria-selected="false">
+                  Find new connections
+        </button>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="tab-content" id="nav-tabContent">
+
+      <% unless @friends.empty? %>
+        <div class="tab-pane fade show active" id="friends" role="tabpanel" aria-labelledby="friends-tab" tabindex="0">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <%= render partial: 'usercard', collection: @friends, as: :user %>
+          </div>
+        </div>
+      <% end %>
+
+      <% unless @pending_requests.empty? %>
+        <div class="tab-pane fade" id="requests-pending" role="tabpanel" aria-labelledby="requests-pending-tab" tabindex="0">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <%= render partial: 'usercard', collection: @pending_requests, as: :user %>
+          </div>
+        </div>
+      <% end %>
+
+      <% unless @friend_requests.empty? %>
+        <div class="tab-pane fade" id="pending-requests" role="tabpanel" aria-labelledby="pending-requests-tab" tabindex="0">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <%= render partial: 'usercard', collection: @friend_requests, as: :user %>
+          </div>
+        </div>
+      <% end %>
+
+      <% unless @other_users.empty? %>
+        <div class="tab-pane fade" id="find-friends" role="tabpanel" aria-labelledby="find-friends-tab" tabindex="0">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <%= render partial: 'usercard', collection: @other_users, as: :user %>
+          </div>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+</div>
