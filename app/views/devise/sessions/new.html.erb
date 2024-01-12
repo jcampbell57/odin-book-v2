@@ -1,4 +1,4 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
   <div class="card">
     <h4 class='card-header'>Log in</h4>
     <div class="card-body">
@@ -26,10 +26,10 @@
       </div>
     </div>
   </div>
-
-  <br><br>
-
-  <div class="actions d-grid gap-2 col-5">
-    <%= render "devise/shared/links" %>
-  </div>
 <% end %>
+
+<br><br>
+
+<div class="d-grid gap-2 col-5">
+  <%= render "devise/shared/links" %>
+</div>
