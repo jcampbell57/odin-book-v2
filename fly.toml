@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for odin-book-v2 on 2023-12-27T13:48:33-08:00
+# fly.toml app configuration file generated for odin-book-v2 on 2024-01-11T22:38:42-08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "odin-book-v2"
-primary_region = "sjc"
+primary_region = "lax"
 console_command = "/rails/bin/rails console"
 
 [build]
