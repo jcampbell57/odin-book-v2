@@ -94,3 +94,5 @@ gem "dockerfile-rails", ">= 1.6", :group => :development
 gem 'faker'
 
 gem 'pagy', '~> 6.2'
+
+gem "letter_opener", group: :development
