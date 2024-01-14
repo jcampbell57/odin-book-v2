@@ -3,7 +3,7 @@
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
 
       <% unless @friends.empty? %>
-        <button class="nav-link active"
+        <button class="nav-link"
                 id="friends-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#friends"
@@ -16,7 +16,7 @@
       <% end %>
 
       <% unless @pending_requests.empty? %>
-        <button class="nav-link "
+        <button class="nav-link"
                 id="requests-pending-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#requests-pending"
@@ -42,7 +42,7 @@
       <% end %>
 
       <% unless @other_users.empty? %>
-        <button class="nav-link"
+        <button class="nav-link active"
                 id="find-friends-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#find-friends"
@@ -61,7 +61,7 @@
     <div class="tab-content" id="nav-tabContent">
 
       <% unless @friends.empty? %>
-        <div class="tab-pane fade show active" id="friends" role="tabpanel" aria-labelledby="friends-tab" tabindex="0">
+        <div class="tab-pane fade" id="friends" role="tabpanel" aria-labelledby="friends-tab" tabindex="0">
           <div class="row row-cols-1 row-cols-md-3 g-4">
             <%= render partial: 'usercard', collection: @friends, as: :user %>
           </div>
@@ -85,9 +85,9 @@
       <% end %>
 
       <% unless @other_users.empty? %>
-        <div class="tab-pane fade" id="find-friends" role="tabpanel" aria-labelledby="find-friends-tab" tabindex="0">
+        <div class="tab-pane fade show active" id="find-friends" role="tabpanel" aria-labelledby="find-friends-tab" tabindex="0">
           <div class="row row-cols-1 row-cols-md-3 g-4">
-            <%= render partial: 'usercard', collection: @other_users, as: :user %>
+            <%= render partial: 'usercard', collection: @other_users.shuffle, as: :user %>
           </div>
         </div>
       <% end %>
