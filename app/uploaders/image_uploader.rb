@@ -1,18 +1,55 @@
 class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
-  process resize_to_limit: [400, 400]
+
+  # include CarrierWave::MiniMagick
+  include Cloudinary::CarrierWave
+
+  process convert: 'png'
+  process tags: ['user_image']
+
+  version :standard do
+    process eager: true
+    process resize_to_fill: [100, 150, :north]
+  end
+
+  version :thumbnail do
+    eager
+    resize_to_fit(50, 50)
+  end
+
+  def cache_dir
+    "#{Rails.root}/tmp/uploads"
+  end
+
+  # def public_id
+  #   model.short_name
+  # end
+
+  # def public_id
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
+
+  # https://hackernoon.com/creating-image-uploader-in-rails-6-using-cloudinary-and-carrierwave-jp173u1w
+  # https://stackoverflow.com/questions/56771315/need-to-implement-cache-if-you-want-to-use-cloudinarycarrierwavestorage-as
+  # CarrierWave.configure do |config|
+  #   config.cache_storage = :file
+  # end
+
+  # process resize_to_limit: [400, 400]
+  # This line is currently causing an error in development when uploading a jpg or png:
+  # "Image Failed to manipulate, maybe it is not an image?"
+  # I wonder if imagemagick is installed/configured correctly?
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-  end
+  # def store_dir
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
