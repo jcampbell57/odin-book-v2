@@ -96,3 +96,5 @@ gem 'faker'
 gem 'pagy', '~> 6.2'
 
 gem "letter_opener", group: :development
+
+gem 'cloudinary'
