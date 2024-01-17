@@ -1,2 +1,31 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class = "text-center mx-auto", style="max-width: 200px; max-height: 200px;">
+  <% if @user.image? %>
+    <%= image_tag @user.image.url, class: "mh-100 mw-100 rounded" %>
+  <% else %>
+    <%= gravatar_for(@user, {size: 256, classlist: "mh-100 mw-100 rounded"}) %>
+    <%# <i class="bi bi-person-bounding-box" style="font-size: 8rem"></i> %>
+  <% end %>
+</div>
+
+<br>
+
+<h3 class = 'text-center'><%= @user.full_name %></h3>
+
+<div class="d-flex justify-content-center">
+  <%= render 'button', user: @user %>
+</div>
+
+<br>
+
+<div id="user-post-display"></div>
+<%= turbo_frame_tag "pagination", src: user_path(@user, format: :turbo_stream), loading: :lazy %>
+
+<%# loading icon %>
+<div id='loading-icon' class="d-flex justify-content-center align-items-center">
+  <div class="spinner-border text-secondary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<br><br>
+
