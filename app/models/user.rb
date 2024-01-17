@@ -11,6 +11,8 @@ class User < ApplicationRecord
   # Needs to validate only when image is present:
   # validate :valid_image_content_type
 
+  after_create :send_welcome_email
+
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -42,23 +44,25 @@ class User < ApplicationRecord
     "#{fname} #{lname}"
   end
 
+  # No longer needed after moving to scope of Post:
   # Returns all posts from this user's friends and self
-  def friends_and_own_posts
-    our_posts = []
-    friends.each do |f|
-      f.posts.each do |p|
-        our_posts << p
-      end
-    end
 
-    # append user's posts
-    our_posts.concat(posts)
+  # def friends_and_own_posts
+  #   our_posts = []
+  #   friends.each do |f|
+  #     f.posts.each do |p|
+  #       our_posts << p
+  #     end
+  #   end
 
-    # Sort the array based on created_at in descending order
-    our_posts.sort_by! { |post| post.created_at }.reverse!
+  #   # append user's posts
+  #   our_posts.concat(posts)
 
-    our_posts
-  end
+  #   # Sort the array based on created_at in descending order
+  #   our_posts.sort_by! { |post| post.created_at }.reverse!
+
+  #   our_posts
+  # end
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
@@ -91,5 +95,9 @@ class User < ApplicationRecord
   def valid_image_content_type
     allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
     errors.add(:image, 'must be a valid image format') unless image.content_type.in?(allowed_types)
+  end
+
+  def send_welcome_email
+    WelcomeMailer.with(user: self).welcome_email.deliver_later
   end
 end
