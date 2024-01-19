@@ -1,0 +1,13 @@
+<%= turbo_stream.append "notifications-display" do %>
+  <%= render partial: "notifications/notification", collection: @notifications %>
+  <%# mark notifications as viewed %>
+  <%# @new.each { |notification| notification.update(viewed?: true) } %>
+<% end %>
+
+<% if @pagy.next.present? %>
+  <%= turbo_stream.replace "pagination" do %>
+    <%= turbo_frame_tag "pagination", src: notifications_user_path(page: @pagy.next, format: :turbo_stream), loading: :lazy %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove "loading-icon" %>
+<% end %>

@@ -26,3 +26,6 @@
     <%= User.find(notification.notice_id).full_name %> liked your comment under this post
   <% end %>
 <% end %>
+
+<%# mark notifications as viewed %>
+<% notification.update(viewed?: true) %>
