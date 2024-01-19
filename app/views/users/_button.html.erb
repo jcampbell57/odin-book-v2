@@ -1,3 +1,4 @@
+<%# Render appropriate button based on relationship with current_user %>
 <% if current_user == @user %>
     <%= link_to "Edit profile", edit_user_registration_path, class: 'btn btn-warning' %>
 <% else %>
@@ -6,7 +7,7 @@
   <% elsif @pending_requests.include?(user) %>
     <%= button_to 'Cancel connection request', user_friendship_path(id: user, user_id: user), method: :delete, class: 'btn btn-danger btn-sm' %>
   <% elsif @friend_requests.include?(user) %>
-    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#decisionModal">Pending connection...</button>
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#decisionModal<%= user.id %>">Pending connection...</button>
     <%= render 'friendships/decisionModal', user: user %>
   <% elsif @other_users.include?(user) %>
     <%= button_to 'Add connection', user_friendships_path(user), class: 'btn btn-outline-secondary btn-sm' %>
