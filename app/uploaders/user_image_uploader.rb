@@ -1,4 +1,4 @@
-class ImageUploader < CarrierWave::Uploader::Base
+class UserImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
 
@@ -15,7 +15,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :thumbnail do
     eager
-    resize_to_fit(50, 50)
+    resize_to_fit(80, 80)
   end
 
   def cache_dir

@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[github]
 
-  mount_uploader :image, ImageUploader
+  mount_uploader :image, UserImageUploader
   validate :picture_size
 
   # Needs to validate only when image is present:
