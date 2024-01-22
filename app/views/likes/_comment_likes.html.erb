@@ -1,0 +1,21 @@
+<li class="list-group-item d-flex justify-content-between align-items-center text-bg-light">
+  <small class="text-secondary">
+    <% unless comment.likes.empty? %>
+      <%= pluralize(comment.likes.count, 'like') %>
+    <% end %>
+  </small>
+
+  <div class='btn-group'>
+    <%= button_to comment_likes_path(comment), class: "btn btn-outline-secondary btn-sm" do %>
+      <% if liked?(comment, 'comment', current_user) %>
+        <i class="bi bi-hand-thumbs-up-fill"></i> Liked
+      <% else %>
+        <i class="bi bi-hand-thumbs-up"></i> Like
+      <% end %>
+    <% end %>
+    
+    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseCommentOnCommentForm<%="#{comment.id}"%>" aria-expanded="false" aria-controls="collapseCommentOnCommentForm<%="#{comment.id}"%>">
+      <i class="bi bi-chat"></i> Comment
+    </button>      
+  </div>
+</li>

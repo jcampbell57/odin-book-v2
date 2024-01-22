@@ -1,0 +1,67 @@
+<div class = 'card text-bg-light'>
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills d-flex align-items-center">
+      <li class="nav-item" style="max-width: 3rem; max-height: 3rem;">
+        <% if comment.user.image? %>
+          <%= link_to user_path(comment.user), data: { turbo: false } do %>
+            <%= image_tag comment.user.image.url, class: "img-fluid rounded-start" %>
+          <% end %>
+        <% else %>
+          <%# placeholder image %>
+          <%= link_to user_path(comment.user), class: 'link-secondary' do %>
+            <%= gravatar_for(comment.user, {classlist: 'gravatar img-fluid rounded-start'}) %>
+          <% end %>
+        <% end %>
+      </li>
+    
+      <li class="nav-item nav-link link-underline-opacity-0 flex-grow-1">
+        <%= link_to comment.user.full_name, user_path(comment.user), data: { turbo: false }, class: 'link-secondary fw-bold' %>
+        <br>
+        <small class="text-secondary">posted <%= distance_of_time_in_words(comment.created_at, Time.now) %> ago</small>
+      </li>
+      
+      <% if current_user == comment.user %>
+        <li class="nav-item dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-list link-secondary"></i>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= button_to 'Delete comment', comment_path(comment), method: :delete, class: 'dropdown-item', data: { turbo_confirm: 'Are you sure you want to delete this comment?' } %></li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  
+  <div class = 'card-body'>
+    <%= comment.content %>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <%= render 'likes/comment_likes', comment: comment, current_user: %>
+
+
+    <li class="list-group-item text-bg-light collapse" id="collapseCommentOnCommentForm<%="#{comment.id}"%>" >
+      <%= render 'comments/form', post: Post.find(comment.post_id), parent: comment %>
+    </li>
+
+    <% unless comment.replies.empty? %>
+        <% ordered_comments = Post.find(comment.post_id).comments
+                      .where(parent_id: comment.id)
+                      .left_joins(:likes)
+                      .group(:id)
+                      .order('COUNT(likes.id) DESC') %>
+
+      <li class="list-group-item text-bg-light">
+        <p class="text-secondary fs-6 fw-medium lh-1">replies:</p>
+        <ul class="list-group">
+          <%= render partial: 'comments/comment', collection: comment.replies, as: :comment %>
+        </ul>
+      </li>
+    <% end %>
+
+  </ul>
+</div>
+
+<br>
