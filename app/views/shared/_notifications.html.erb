@@ -1,25 +1,32 @@
+<%# notifications modal not currently being used %>
+<%# cant yet figure out how to: %>
+  <%# paginate modal from navbar  %>
+  <%# mark notifications viewed only when notifications bell clicked/modal rendered %>
+  <%# solution may involve turbo / stimulus? %>
+
 <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <%# <h5 class="modal-title" id="noticeModalLabel"><%= current_user.notifications.count Notifications</h5> %>
+        <!---
         <h5 class="modal-title" id="noticeModalLabel"><%= pluralize(current_user.notifications.where(viewed?: false).count, 'new notification') %></h5>
+        -->
+        <h5 class="modal-title" id="noticeModalLabel"><%= pluralize(current_user.notifications.count, 'total notification') %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
-        <ul class="list-group list-group-flush">          
-          <% @new = current_user.notifications.where(viewed?: false).to_a %>
-          <% @old = current_user.notifications.where(viewed?: true).to_a %>
+        <ul id="modal-notifications" class="list-group list-group-flush">          
+          <% @new = current_user.notifications.where(viewed?: false).order(created_at: :desc).to_a %>
+          <% @all = current_user.notifications.order(created_at: :desc) %>
 
-          <%= render partial: 'notifications/notification', collection: @new %>
-          <%= render partial: 'notifications/notification', collection: @old %>
+          <%= render partial: 'notifications/notification', collection: @all %>
         </ul>
       </div>
 
-      <div class="modal-footer">
-      </div>
+      <div class="modal-footer"></div>
 
     </div>
   </div>
