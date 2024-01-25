@@ -1,6 +1,24 @@
-<%= form_with model: Post do |f| %>
-  <div class="input-group mb-2">
-    <%= f.text_field :content, placeholder: ' Write a post...', aria_label: "Recipient's username", aria_describedby: "button-addon2", class: "form-control" %>
-    <%= f.submit 'Submit Post', class: 'btn btn-secondary', id: "button-addon2" %>
+<div class="card text-center text-bg-secondary">
+  <div class="card-header">
+    New post
   </div>
-<% end %>  
+
+  <div class="card-body mb-2">
+    <%# Need to add stimulus controller for data action to reset form: %>
+    <%= form_with model: Post, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |f| %>
+      <div class="input-group ">
+        <%= f.text_field :content, placeholder: ' Write a post...', aria_label: "Recipient's username", aria_describedby: "button-addon2", class: "form-control" %>
+        <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="collapse" data-bs-target="#postImageInput" aria-expanded="false" aria-controls="postImageInput">
+          <i class="bi bi-image"></i> Add Photo
+        </button>
+        <%= f.submit 'Submit Post', class: 'btn btn-primary', id: "button-addon2" %>
+      </div>
+
+      <div class="field collapse" id="postImageInput">
+        <%#= f.label :upload_an_image, class: "form-label" %><br />
+        <%= f.hidden_field :image_cache %>
+        <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png', class: "form-control"%>
+      </div>
+    <% end %>  
+  </div>
+</div>
