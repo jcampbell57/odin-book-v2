@@ -1,0 +1,11 @@
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+    <%= f.email_field :email, hidden: true, value: 'humblebragger@humblebrag.com' %>
+    <%= f.password_field :password, hidden: true, value: 'humblebaby' %>
+    <%= f.submit "Sign in as Demo User 1", class: "btn btn-secondary w-100" %>
+  <% end %>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+    <%= f.email_field :email, hidden: true, value: 'fitnessgrampacer@test.com' %>
+    <%= f.password_field :password, hidden: true, value: 'pacertest' %>
+    <%= f.submit "Sign in as Demo User 2", class: "btn btn-secondary w-100" %>
+  <% end %>
