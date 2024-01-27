@@ -6,8 +6,10 @@
   <% end %>
 <% end %>
 
+<br>
+
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name), class: "btn btn-secondary" %>
+  <%= link_to "Return to sign in", new_session_path(resource_name), class: "btn btn-secondary" %>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
