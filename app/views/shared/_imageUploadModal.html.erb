@@ -1,0 +1,42 @@
+<%# This file may not be needed if upload only on devise registration edit page  %>
+<%# This file is not currently being used %>
+
+<div class="modal fade" id="imageUploadModal" tabindex="-1" aria-labelledby="imageUploadModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="imageUploadModalLabel">Change Profile Picture</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <%= form_for(user, html: { method: :put }) do |f| %>
+        <div class="modal-body">
+          <%= render 'devise/shared/error_messages', resource: user %>
+          
+          <div class="field">
+            <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png', class: "form-control" %>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <div class="actions">
+            <%= f.submit 'Update', class: "btn btn-secondary" %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<%# Validate image file size %>
+<script type="text/javascript">
+document.getElementById('user_image').addEventListener('change', function() {
+  var size_in_megabytes = this.files[0].size/1024/1024;
+  if (size_in_megabytes > 1) {
+    alert('Maximum file size is 1 MB. Please choose a smaller file.');
+  }
+});
+</script>
