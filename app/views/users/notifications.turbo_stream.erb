@@ -1,7 +1,5 @@
 <%= turbo_stream.append "notifications-display" do %>
   <%= render partial: "notifications/notification", collection: @notifications %>
-  <%# mark notifications as viewed %>
-  <%# @new.each { |notification| notification.update(viewed?: true) } %>
 <% end %>
 
 <% if @pagy.next.present? %>
