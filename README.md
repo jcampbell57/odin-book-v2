@@ -176,6 +176,13 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 
+**Development**
+
+* Use `bin/rails s` to view development version of the application.
+* Use `fly deploy` to deploy the application. 
+
+<br>
+
 **Deployment**
 
   * Not necesary to configure app secrets on fly.io website
