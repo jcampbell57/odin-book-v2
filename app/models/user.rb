@@ -37,7 +37,7 @@ class User < ApplicationRecord
   # END FRIENDSHIP ASSOCIATIONS
 
   def demo_user?
-    email.in?(['humblebragger@humblebrag.com', 'fitnessgrampacer@test.com'])
+    email.in?(['humblebragger@humblebrag.com', 'fitnessgrampacer@test.com']) || email.match?(/@wizarding\.world\z/)
   end
 
   # Returns a string containing this user's first name and last name
