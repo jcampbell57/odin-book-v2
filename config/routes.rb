@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root 'posts#index'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    registrations: 'users/registrations'
+  }
 
   # https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#logout-links
   # devise_scope :user do

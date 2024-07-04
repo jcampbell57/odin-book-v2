@@ -65,7 +65,12 @@
   <div class="card-body">
     <h5 class="card-title">Unhappy?</h5>
     <br>
-    <%= button_to "Delete my account", registration_path(resource_name), class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+    <% if resource.demo_user? %>
+      <%= button_to "Delete my account", registration_path(resource_name), class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?", turbo: false }, disabled: true %>
+      <a>(demo accounts cannot be deleted)</a>
+    <% else %>
+      <%= button_to "Delete my account", registration_path(resource_name), class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?", turbo: false }, method: :delete %>
+    <% end %>
   </div>
 </div>
 

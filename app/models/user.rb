@@ -36,6 +36,10 @@ class User < ApplicationRecord
            through: :recieved_friend_requests, source: :sent_by
   # END FRIENDSHIP ASSOCIATIONS
 
+  def demo_user?
+    email.in?(['humblebragger@humblebrag.com', 'fitnessgrampacer@test.com'])
+  end
+
   # Returns a string containing this user's first name and last name
   def full_name
     "#{fname} #{lname}"
