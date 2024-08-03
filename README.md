@@ -2,16 +2,27 @@
 
 ## Project info
 
-This is a simplified social media app meant to tie together the information learned during the rails module of The Odin Project. Project description can be found here:
+A relatively simple social media app. The purpose of this project is to tie together the concepts learned during the rails module of The Odin Project. This is the capstone project of [The Odin Project's Ruby on Rails course](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-on-rails).
 
-https://www.theodinproject.com/lessons/ruby-on-rails-rails-final-project
+Project description can be found [here](https://www.theodinproject.com/lessons/ruby-on-rails-rails-final-project)
 
 <br>
 
 
 ## Live demo
 
-Available via [Fly.io](https://odin-book-v2.fly.dev/)
+Live demo available via [Fly.io](https://odin-book-v2.fly.dev/)
+
+<br>
+
+
+## Table of Contents
+
+* [Features](#features)
+* [Technologies utilized](#technologies-utilized)
+* [Project screenshots](#project-screenshots)
+* [Behind the Scenes](#behind-the-scenes)
+* [Installation](#installation)
 
 <br>
 
@@ -19,6 +30,7 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 ## Features
 
 **Registration**
+
   * Devise allows users to register or create new sessions
   * OAuth allows users to login with their Github account
   * welcome email is sent when new user is created
@@ -26,11 +38,13 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 **Profile**
+
   * users can add first name, last name, and upload a user image (default gravatar image)
 
 <br>
 
 **Posts**
+
   * users can write posts and upload an image
   * posts can have many likes and comments
   * users can destroy their posts
@@ -38,6 +52,7 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 **Comments**
+
   * can have many likes
   * users can reply to others (nested comments)
   * nested comments use turbo streams to avoid page reloads and update post
@@ -46,12 +61,14 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 **Friendship**
+
   * users can add other users as connections
   * when users are connections, their posts are rendered on eachother's timeline
 
 <br>
 
 **Notifications**
+
   * notified when a reply is made to a comment
   * notified when comments are made on a post
   * notified when post recives likes
@@ -60,6 +77,7 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 **Additional Features**
+
   * Infinite scroll timeline, notifications, and user page
   * Realtime updates of the timeline via Actioncable
   * Minimal bootstrap styling
@@ -67,62 +85,9 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 <br>
 
 
-## Known Bugs
-
-* Bootstrap's javascript dropdowns intermittently stop working, requiring a page refresh.
-
-<br>
-
-
-## Photos
-
-### Post with comments:
-![odinbook2](app/assets/images/post_with_comments.png)
-
-<br>
-
-### Post with nested comments:
-![odinbook3](app/assets/images/post_with_nested_comments.png)
-
-<br>
-
-### Post with an image:
-![odinbook4](app/assets/images/post_with_image.png)
-
-<br>
-
-### Tabbed user index:
-![odinbook5](app/assets/images/user_index.png)
-
-<br>
-
-### User show page with infinite scroll:
-![odinbook6](app/assets/images/user_show_page.png)
-
-<br>
-
-### User edit page, where a user image can be uploaded:
-![odinbook8](app/assets/images/user_edit_page.png)
-
-<br>
-
-### Sign in page:
-![odinbook1](app/assets/images/sign_in.png)
-
-<br>
-
-### User notifications page with infinite scroll:
-![odinbook7](app/assets/images/user_notifications_page.png)
-
-<br>
-
-
-## Behind the Scenes
-
-### This app makes use of:
+## Technologies utilized
 * Ruby version 3.2.2
-* Rails version Rails 7.1.2
-
+* Rails version 7.1.2
 * PostgreSQL database
 * Devise gem for user authentication
 * Faker gem to help seed database with fake users and posts
@@ -135,8 +100,67 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 * Fly.io for deployment
 * Pagy gem for infinite scroll timeline
 
+<br>
 
-### Project Notes
+
+## Project screenshots
+
+### Post with comments:
+![odinbook2](app/assets/images/post_with_comments_600w.png)
+
+### Post with nested comments:
+![odinbook3](app/assets/images/post_with_nested_comments_600w.png)
+
+### Post with an image:
+![odinbook4](app/assets/images/post_with_image_600w.png)
+
+### Tabbed user index:
+![odinbook5](app/assets/images/user_index_600w.png)
+
+### User show page with infinite scroll:
+![odinbook6](app/assets/images/user_show_page_600w.png)
+
+### User edit page, where a user image can be uploaded:
+![odinbook8](app/assets/images/user_edit_page_600w.png)
+
+### Sign in page:
+![odinbook1](app/assets/images/sign_in_600w.png)
+
+### User notifications page with infinite scroll:
+![odinbook7](app/assets/images/user_notifications_page_600w.png)
+<br>
+
+
+## Behind the Scenes
+
+### Known Bugs
+
+* Bootstrap's javascript dropdowns intermittently stop working, requiring a page refresh.
+
+<br>
+
+
+### Improvements
+
+This project could be improved with:
+
+* A chat feature implemented with Actioncable (similar implementation to posts on timeline)
+* realtime notifications with Actioncable
+* A searchbar to find friends.
+* Dark mode
+* A button to return to the top of the page on paginated pages with infinite scroll.
+* Avoid page reloads when friend requests are created, canceled, declined, or accepted with turbo streams
+* Update posts on profile pages with Actoncable
+* Make post able to be either a text OR a photo by using a polymorphic association (so users can still like or comment on it while being none-the-wiser).
+* a basic set of integration tests (not yet complete)
+
+* Sign up for an email provider like sendgrid/Create better email for mailer
+  * At the time of development, sendgrid and postmark seem to want a domain email to sign up (not gmail), mailgun does not have a free teir, and mailchimp requires a physical address.
+
+<br>
+
+
+### Notes
    
 **Project Initiation**
 
@@ -206,47 +230,6 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 
 <br>
 
-
-**Project improvements**
-
-* chat feature implemented with Actioncable (similar implementation to posts on timeline)
-* realtime notifications with Actioncable
-* A searchbar to find friends.
-* Dark mode
-* A button to return to the top of the page on paginated pages with infinite scroll.
-* Avoid page reloads when friend requests are created, canceled, declined, or accepted with turbo streams
-* Update posts on profile pages with Actoncable
-* Make post able to be either a text OR a photo by using a polymorphic association (so users can still like or comment on it while being none-the-wiser).
-* a basic set of integration tests (not yet complete)
-
-* Sign up for an email provider like sendgrid/Create better email for mailer
-* At the time of development, sendgrid and postmark seem to want a domain email to sign up (not gmail), mailgun does not have a free teir, and mailchimmp emails a physical address.
-
-<br>
-
-
-**Helpful Resources**
-
-* https://medium.com/@aaron.rory.newbold/ruby-on-rails-facebook-implementation-spybook-8c03a0b49b32
-  * This blog post was a useful resource when working on associations. 
-* https://www.bearer.com/blog/infinite-scrolling-pagination-hotwire
-  * This resource was helpful when implementing pagination on various pages. 
-* https://github.com/hotwired/turbo-rails/issues/122#issuecomment-783214928
-  * This comment helped me get unstuck when I was having trouble with the sign in and registration pages after implimenting pagination with turbo. Turns out, I needed to add `data: { turbo: false }` to those forms. 
-* https://cloudinary.com/documentation/rails_carrierwave
-  * The cloudinary docs were very helpful when configuring with carrierwave.
-* https://medium.com/@adi8090808766/credentials-or-environment-variables-in-ruby-on-rails-371831f2502
-  * I referenced this article when setting up credentials
-* https://dev.to/morinoko/sending-emails-in-rails-with-action-mailer-and-gmail-35g4
-  * This article was helpful when setting up Actionmailer with a Gmail account as an alternative to Sendgrid.
-* https://stackoverflow.com/questions/23137012/535-5-7-8-username-and-password-not-accepted
-  * This thread helped me configure a GMail account to send emails.
-* https://github.com/ryanb/letter_opener/issues/117#issuecomment-611362820
-  * This post was helpful when for off emails when seeding during development.
-
-<br>
-
-
 **Terminal commands used during development**
 
 * `rails new odin-book --database=postgresql `
@@ -270,3 +253,30 @@ Available via [Fly.io](https://odin-book-v2.fly.dev/)
 * `rails generate channel post`
 * `rails generate mailer WelcomeMailer`
 * `rails generate migration AddImageToPosts image:string`
+
+<br>
+
+
+### Resources
+
+* [This blog post](https://medium.com/@aaron.rory.newbold/ruby-on-rails-facebook-implementation-spybook-8c03a0b49b32
+) was a useful resource when working on associations.
+* [This resource](https://www.bearer.com/blog/infinite-scrolling-pagination-hotwire) was helpful when implementing pagination on various pages.
+* [This comment](https://github.com/hotwired/turbo-rails/issues/122#issuecomment-783214928) helped me get unstuck when I was having trouble with the sign in and registration pages after implimenting pagination with turbo. Turns out, I needed to add `data: { turbo: false }` to those forms. 
+* [The cloudinary docs](https://cloudinary.com/documentation/rails_carrierwave) were very helpful when configuring with carrierwave.
+* I referenced [this article](https://medium.com/@adi8090808766/credentials-or-environment-variables-in-ruby-on-rails-371831f2502) when setting up credentials
+* [This article](https://dev.to/morinoko/sending-emails-in-rails-with-action-mailer-and-gmail-35g4) was helpful when setting up Actionmailer with a Gmail account as an alternative to Sendgrid.
+* [This thread](https://stackoverflow.com/questions/23137012/535-5-7-8-username-and-password-not-accepted) helped me configure a GMail account to send emails.
+* [This post](https://github.com/ryanb/letter_opener/issues/117#issuecomment-611362820) was helpful when for off emails when seeding during development.
+
+<br>
+
+
+## Installation
+
+- Clone this repository to your desktop.
+- Navigate to the top level of the directory by running `cd odin-book-v2`.
+- Run `bundle install` to install the required dependencies.
+- Run `rails db:setup` to create and seed the database.
+- Start the rails server by running `rails s`
+- Visit https://localhost:3000 to view the app in the browser
